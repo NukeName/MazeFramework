@@ -11,5 +11,7 @@ package mazeframework.algorithms;
  * @author Javid
  */
 public class GitTest {
-    
+    public GitTest() {
+        System.out.println("Spaghetti");
+    }
 }
