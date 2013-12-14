@@ -13,5 +13,7 @@ package mazeframework.algorithms;
 public class GitTest {
     public GitTest() {
         System.out.println("Spaghetti");
+        System.out.println("ftw");
+        //Some comment
     }
 }
