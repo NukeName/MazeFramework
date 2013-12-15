@@ -95,7 +95,6 @@ public class WaveAlgorithm implements Pathfinder {
         boolean stop = true;
         ArrayList<Cell> markedCells = new ArrayList<>();
         markedCells.add(begin);
-        do {
             stop = true;
             for (int j = 0; j < markedCells.size(); j++) {
                 Cell cell = markedCells.get(j);
@@ -113,7 +112,6 @@ public class WaveAlgorithm implements Pathfinder {
                    //markedCells.remove(cell);
                 }   
             }
-        } while (!stop);
 
 //        int dx[] = {1, 0, -1, 0};
 //        int dy[] = {0, 1, 0, -1};
