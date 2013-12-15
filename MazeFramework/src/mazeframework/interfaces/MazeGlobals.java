@@ -13,5 +13,6 @@ import mazeframework.algorithms.WaveAlgorithm;
  * @author Gintoki
  */
 public class MazeGlobals {
-    public static Pathfinder algorithm = new AStarAlgorithm();
+    public static Pathfinder algorithm = new WaveAlgorithm();
+    public static final int BENCHMARK_ITERATIONS = 100;
 }

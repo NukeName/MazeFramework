@@ -210,10 +210,22 @@ public class MazeGrid {
         return false;
     }
 
+    public int getWalls() {
+        int num = 0;
+        for(int i=0; i<refGrid.length; i++) {
+            for(int k=0; k<refGrid.length; k++) {
+                if(compareColors(refGrid[i][k],BORDERCOLOR)) {
+                    num++;
+                }
+            }
+        }
+        return num;
+    }
+    
     public Point getStart() {
         return getGridCoords(oldStart);
     }
-
+    
     public Point getGoal() {
         return getGridCoords(oldGoal);
     }
@@ -242,7 +254,7 @@ public class MazeGrid {
     }
     
     private Group solution = new Group();
-    public void overlaySolution(List<Point> res, long timeStamp) {
+    public void overlaySolution(List<Point> res) {
         if (res != null) {
             solution.getChildren().clear();
             double iterations = 0;
@@ -262,12 +274,13 @@ public class MazeGrid {
                 solution.getChildren().add(r);
                 iterations++;
             }
-            JOptionPane.showMessageDialog(null, "Path Point Length: "+res.size()+"\n Timediff: "+(System.currentTimeMillis()-timeStamp)
-                    , "Successful Completion!", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(null, "Path Point Length: "+res.size()+"\n Timediff: "+(System.currentTimeMillis()-timeStamp)
+//                    , "Successful Completion!", JOptionPane.INFORMATION_MESSAGE);
             
         } else {
             JOptionPane.showMessageDialog(null, "Presumably no path was found", "Null Algorithm Result", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+ 
     
 }
