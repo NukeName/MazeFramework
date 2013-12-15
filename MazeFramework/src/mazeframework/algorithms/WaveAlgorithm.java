@@ -7,6 +7,7 @@ package mazeframework.algorithms;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import mazeframework.interfaces.MazeCellType;
 import mazeframework.interfaces.Pathfinder;
@@ -39,7 +40,7 @@ public class WaveAlgorithm implements Pathfinder {
     @Override
     public List<Point> startPathfinder(boolean diagonalAllowed) {
         begin.setWaveNum(0);
-        setWaveNums(begin, 0);
+        setWaveNums();
         System.out.println("----------------");
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells.length; j++) {
@@ -54,7 +55,10 @@ public class WaveAlgorithm implements Pathfinder {
                 if (cells[j][i] != null) {
                     System.out.print(cells[j][i].getWavenum() + " ");
                 }
-                
+                else
+                {
+                    System.out.print(-1);
+                }
             }
             System.out.println("");
         }
@@ -81,31 +85,35 @@ public class WaveAlgorithm implements Pathfinder {
             }
             d--;
         }
+        Collections.reverse(arr);
         return arr;
     }
     
-    private void setWaveNums(Cell c, int curWaveNum) {
+    private void setWaveNums() {
         int dx[] = {1, 0, -1, 0};
         int dy[] = {0, 1, 0, -1};
         boolean stop = true;
-        int lastMarked = 1;
-        Cell[] markedCells = new Cell[cells.length * cells.length];
-        markedCells[0] = begin;
+        ArrayList<Cell> markedCells = new ArrayList<>();
+        markedCells.add(begin);
         do {
             stop = true;
-            for (Cell cell : markedCells) {
+            for (int j = 0; j < markedCells.size(); j++) {
+                Cell cell = markedCells.get(j);
                 for (int i = 0; i < 4; ++i) {
-                    if (c.getX() + dx[i] < cells.length
-                            && c.getY() + dy[i] < cells.length
-                            && c.getX() + dx[i] >= 0
-                            && c.getY() + dy[i] >= 0
-                            && cells[c.getX() + dx[i]][c.getY() + dy[i]] != null
-                            && cells[c.getX() + dx[i]][c.getY() + dy[i]].getWavenum() == -1) {
-                        
+                    if (cell.getX() + dx[i] < cells.length
+                            && cell.getY() + dy[i] < cells.length
+                            && cell.getX() + dx[i] >= 0
+                            && cell.getY() + dy[i] >= 0
+                            && cells[cell.getX() + dx[i]][cell.getY() + dy[i]] != null
+                            && cells[cell.getX() + dx[i]][cell.getY() + dy[i]].getWavenum() == -1) {
+                        stop = false;
+                        cells[cell.getX() + dx[i]][cell.getY() + dy[i]].setWaveNum(cell.getWavenum() + 1);
+                        markedCells.add(cells[cell.getX() + dx[i]][cell.getY() + dy[i]]);
                     }
-                }
+                   //markedCells.remove(cell);
+                }   
             }
-        } while (stop);
+        } while (!stop);
 
 //        int dx[] = {1, 0, -1, 0};
 //        int dy[] = {0, 1, 0, -1};
@@ -162,7 +170,7 @@ class Cell {
     }
 
     /**
-     * @return the wavenum
+     * @return the WaveNum
      */
     public int getWavenum() {
         return wavenum;
