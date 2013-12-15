@@ -262,6 +262,7 @@ public class MazeGrid {
                 solution.getChildren().add(r);
                 iterations++;
             }
+            JOptionPane.showMessageDialog(null, "Path Point Length: "+res.size(), "Successful Completion!", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Presumably no path was found", "Null Algorithm Result", JOptionPane.INFORMATION_MESSAGE);
         }
