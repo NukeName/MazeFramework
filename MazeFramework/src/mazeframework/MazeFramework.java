@@ -56,13 +56,17 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
+import mazeframework.algorithms.AStarAlgorithm;
 import mazeframework.interfaces.MazeGlobals;
+import mazeframework.interfaces.Pathfinder;
 
 /**
  *
  * @author Heisenberg
  */
 public class MazeFramework extends Application {
+    public static Pathfinder algorithm = new AStarAlgorithm();
+    public static final int BENCHMARK_ITERATIONS = 100;
 
     private Slider slider;
     private CheckMenuItem noDiagonal;
@@ -227,8 +231,8 @@ public class MazeFramework extends Application {
                 @Override
                 protected List<Point> call() {
                     startTimeStamp = System.currentTimeMillis();
-                    MazeGlobals.algorithm.initPathfinder(mazeGrid.getConvertedGrid(), mazeGrid.getStart(), mazeGrid.getGoal());
-                    List<Point> res = MazeGlobals.algorithm.startPathfinder(noDiagonal.isSelected());
+                    MazeFramework.algorithm.initPathfinder(mazeGrid.getConvertedGrid(), mazeGrid.getStart(), mazeGrid.getGoal());
+                    List<Point> res = MazeFramework.algorithm.startPathfinder(noDiagonal.isSelected());
                     return res;
                 }
             };
@@ -285,7 +289,7 @@ public class MazeFramework extends Application {
         benchWalls = mazeGrid.getWalls();
         benchDiag = noDiagonal.isSelected();
 
-        benchmarkData = new long[MazeGlobals.BENCHMARK_ITERATIONS];
+        benchmarkData = new long[BENCHMARK_ITERATIONS];
         if (mazeGrid.hasStartAndEnd()) {
             perfectRoute = Math.sqrt(Math.pow(mazeGrid.getGoal().x - mazeGrid.getStart().x, 2)
                     + Math.pow(mazeGrid.getGoal().y - mazeGrid.getStart().y, 2));
@@ -293,18 +297,18 @@ public class MazeFramework extends Application {
                 @Override
                 protected List<Point> call() {
                     long timeStamp;
-                    for(int i=0; i<MazeGlobals.BENCHMARK_ITERATIONS-1; i++) {
+                    for(int i=0; i<MazeFramework.BENCHMARK_ITERATIONS-1; i++) {
                         if(!isCancelled()) {
                             timeStamp = System.nanoTime();
-                            MazeGlobals.algorithm.initPathfinder(mazeGrid.getConvertedGrid(), mazeGrid.getStart(), mazeGrid.getGoal());
-                            MazeGlobals.algorithm.startPathfinder(noDiagonal.isSelected());
+                            MazeFramework.algorithm.initPathfinder(mazeGrid.getConvertedGrid(), mazeGrid.getStart(), mazeGrid.getGoal());
+                            MazeFramework.algorithm.startPathfinder(noDiagonal.isSelected());
                             benchmarkData[i] = (System.nanoTime() - timeStamp);
-                            updateProgress(i, MazeGlobals.BENCHMARK_ITERATIONS);
+                            updateProgress(i, MazeFramework.BENCHMARK_ITERATIONS);
                         }
                     }
                     timeStamp = System.nanoTime();
-                    List<Point> res = MazeGlobals.algorithm.startPathfinder(noDiagonal.isSelected());
-                    benchmarkData[MazeGlobals.BENCHMARK_ITERATIONS-1] = (System.nanoTime()-timeStamp);
+                    List<Point> res = MazeFramework.algorithm.startPathfinder(noDiagonal.isSelected());
+                    benchmarkData[MazeFramework.BENCHMARK_ITERATIONS-1] = (System.nanoTime()-timeStamp);
                     if(res!=null) { 
                         steps = res.size();
                     }
@@ -384,10 +388,10 @@ public class MazeFramework extends Application {
 //        } else {
 //            walls = ""+benchWalls/((benchSide*benchSide)-benchWalls);
 //        }
-        String tx = "Algorithm:\t"+MazeGlobals.algorithm.getClass().getSimpleName()+
+        String tx = "Algorithm:\t"+algorithm.getClass().getSimpleName()+
                 "\nMaze:\t\t"+mazeName+
                 "\nDiagonal:\t\t"+benchDiag+
-                "\nRuns:\t\t"+MazeGlobals.BENCHMARK_ITERATIONS+
+                "\nRuns:\t\t"+BENCHMARK_ITERATIONS+
                 "\nTotal time:\t"+total+
                 " ns\nAvg. time:\t"+(total/100d)+
                 " ns = "+(total/100d)/1000000+
