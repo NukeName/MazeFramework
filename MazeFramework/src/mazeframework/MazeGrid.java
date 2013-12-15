@@ -242,7 +242,7 @@ public class MazeGrid {
     }
     
     private Group solution = new Group();
-    public void overlaySolution(List<Point> res) {
+    public void overlaySolution(List<Point> res, long timeStamp) {
         if (res != null) {
             solution.getChildren().clear();
             double iterations = 0;
@@ -262,7 +262,9 @@ public class MazeGrid {
                 solution.getChildren().add(r);
                 iterations++;
             }
-            JOptionPane.showMessageDialog(null, "Path Point Length: "+res.size(), "Successful Completion!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Path Point Length: "+res.size()+"\n Timediff: "+(System.currentTimeMillis()-timeStamp)
+                    , "Successful Completion!", JOptionPane.INFORMATION_MESSAGE);
+            
         } else {
             JOptionPane.showMessageDialog(null, "Presumably no path was found", "Null Algorithm Result", JOptionPane.INFORMATION_MESSAGE);
         }

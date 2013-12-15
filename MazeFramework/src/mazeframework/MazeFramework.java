@@ -59,7 +59,9 @@ public class MazeFramework extends Application {
     private MazeGrid mazeGrid;
     private StackPane root;
     private Stage stage;
-
+    
+    private long startTimeStamp = 0L;
+    
     @Override
     public void start(Stage primaryStage) {
         this.stage = primaryStage;
@@ -162,6 +164,7 @@ public class MazeFramework extends Application {
         Menu execution = new Menu("Execution");
         noDiagonal = new CheckMenuItem("Diagonal Movement");
         MenuItem execute = new MenuItem("Execute");
+        
         execute.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
@@ -170,6 +173,7 @@ public class MazeFramework extends Application {
                     Task<List<Point>> tsk = new Task<List<Point>>() {
                         @Override
                         protected List<Point> call() {
+                            startTimeStamp = System.currentTimeMillis();
                             MazeGlobals.algorithm.initPathfinder(mazeGrid.getConvertedGrid(), mazeGrid.getStart(), mazeGrid.getGoal());
                             List<Point> res = MazeGlobals.algorithm.startPathfinder(noDiagonal.isSelected());
                             return res;
@@ -179,7 +183,7 @@ public class MazeFramework extends Application {
                     tsk.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
                         @Override
                         public void handle(WorkerStateEvent t) {
-                            mazeGrid.overlaySolution((List<Point>) t.getSource().getValue());
+                            mazeGrid.overlaySolution((List<Point>) t.getSource().getValue(), startTimeStamp); 
                         }
                     });
                     
