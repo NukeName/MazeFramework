@@ -284,10 +284,11 @@ public class MazeFramework extends Application {
         benchSide = mazeGrid.getSideCount();
         benchWalls = mazeGrid.getWalls();
         benchDiag = noDiagonal.isSelected();
-        perfectRoute = Math.sqrt(Math.pow(mazeGrid.getGoal().x-mazeGrid.getStart().x,2)
-                +Math.pow(mazeGrid.getGoal().y-mazeGrid.getStart().y,2));
+
         benchmarkData = new long[MazeGlobals.BENCHMARK_ITERATIONS];
         if (mazeGrid.hasStartAndEnd()) {
+            perfectRoute = Math.sqrt(Math.pow(mazeGrid.getGoal().x - mazeGrid.getStart().x, 2)
+                    + Math.pow(mazeGrid.getGoal().y - mazeGrid.getStart().y, 2));
             final Task<List<Point>> tsk = new Task<List<Point>>() {
                 @Override
                 protected List<Point> call() {
