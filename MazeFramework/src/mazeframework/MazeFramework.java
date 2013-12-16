@@ -57,6 +57,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
 import mazeframework.algorithms.AStarAlgorithm;
+import mazeframework.algorithms.WaveAlgorithm;
 import mazeframework.interfaces.MazeGlobals;
 import mazeframework.interfaces.Pathfinder;
 
@@ -65,7 +66,7 @@ import mazeframework.interfaces.Pathfinder;
  * @author Heisenberg
  */
 public class MazeFramework extends Application {
-    public static Pathfinder algorithm = new AStarAlgorithm();
+    public static Pathfinder algorithm = new WaveAlgorithm();
     public static final int BENCHMARK_ITERATIONS = 100;
 
     private Slider slider;

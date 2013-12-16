@@ -41,27 +41,27 @@ public class WaveAlgorithm implements Pathfinder {
     public List<Point> startPathfinder(boolean diagonalAllowed) {
         begin.setWaveNum(0);
         setWaveNums();
-        System.out.println("----------------");
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells.length; j++) {
-                if (begin.getX() == j && begin.getY() == i) {
-                    System.out.print("<" + cells[j][i].getWavenum() + ">");
-                    continue;
-                }
-                if (end.getX() == j && end.getY() == i) {
-                    System.out.print(">" + cells[j][i].getWavenum() + "<");
-                    continue;
-                }
-                if (cells[j][i] != null) {
-                    System.out.print(cells[j][i].getWavenum() + " ");
-                }
-                else
-                {
-                    System.out.print(-1);
-                }
-            }
-            System.out.println("");
-        }
+//        System.out.println("----------------");
+//        for (int i = 0; i < cells.length; i++) {
+//            for (int j = 0; j < cells.length; j++) {
+//                if (begin.getX() == j && begin.getY() == i) {
+//                    System.out.print("<" + cells[j][i].getWavenum() + ">");
+//                    continue;
+//                }
+//                if (end.getX() == j && end.getY() == i) {
+//                    System.out.print(">" + cells[j][i].getWavenum() + "<");
+//                    continue;
+//                }
+//                if (cells[j][i] != null) {
+//                    System.out.print(cells[j][i].getWavenum() + " ");
+//                }
+//                else
+//                {
+//                    System.out.print(-1);
+//                }
+//            }
+//            System.out.println("");
+//        }
         //End of marking
 
         //bactracking
